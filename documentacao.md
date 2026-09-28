@@ -37,7 +37,7 @@ Esses limites são intencionais: evitam que a experiência prometa uma precisão
 
 ### Hipóteses de usuário
 
-O produto parte de três situações principais, documentadas em mais detalhe em [docs/pesquisa-publico-alvo-automatch.md](docs/pesquisa-publico-alvo-automatch.md):
+O produto parte de três situações principais:
 
 | Situação | Dor principal | Resposta no produto |
 | --- | --- | --- |
@@ -111,6 +111,20 @@ Antes de ampliar catálogo ou construir integrações, o objetivo é validar se 
 | Orçamento é a principal tensão | Testar buscas acima e abaixo do teto | Ajuste consciente de orçamento, modelo ou região |
 | Jornada orientada ajuda iniciantes | Teste moderado com baixa familiaridade automotiva | Pessoa chega a uma lista curta sem ajuda externa |
 | Transparência aumenta confiança | Exibir origem e data do anúncio | Aumento de confiança sem queda material no avanço |
+
+### Go-to-market e monetização
+
+O lançamento deve começar por canais de alta intenção, onde a pessoa já compara restrições concretas. SEO para buscas como “SUV até R$ 100 mil em São Paulo”, parcerias com revendas que mantenham o inventário atualizado e conteúdo social que explique trade-offs são canais compatíveis com essa etapa.
+
+O uso de busca, orientação e comparação permanece gratuito para o consumidor. A monetização futura pode vir de leads qualificados consentidos, assinatura para gestão de inventário/intenção e destaque publicitário claramente identificado. Uma posição paga nunca deve se apresentar como recomendação orgânica.
+
+### Guardrails de confiança
+
+- Exibir origem e data de atualização para preço e disponibilidade quando houver integração.
+- Explicar o score e permitir que a pessoa escolha o critério mais importante.
+- Vincular dados técnicos à versão, ao ano e a uma fonte verificável.
+- Informar quem recebe os dados em qualquer fluxo de contato com loja.
+- Orientar a confirmação de documentação, histórico, garantia, condição mecânica e test drive, sem se apresentar como inspeção ou aconselhamento financeiro.
 
 ### Métricas iniciais
 
@@ -191,7 +205,27 @@ Em produção, oferta e especificação técnica devem ser entidades distintas:
 | Veículo/versão | ano-modelo, versão, quilometragem, VIN parcial | fonte do anúncio e documentação verificável |
 | Especificação | autonomia, bateria, consumo, porta-malas, itens de segurança | fabricante, Inmetro e fontes técnicas verificadas |
 
-O modelo detalhado, os campos sugeridos e as regras de publicação estão em [docs/modelo-de-dados-producao.md](docs/modelo-de-dados-producao.md). A regra essencial é não inferir equipamentos pelo modelo ou marca, porque versões e anos variam.
+Um formato de referência para uma integração futura é:
+
+```json
+{
+  "listingId": "uuid",
+  "status": "available",
+  "updatedAt": "2026-09-28T12:00:00Z",
+  "seller": { "name": "Concessionária Exemplo", "type": "dealer" },
+  "offer": { "cashPrice": 99990, "currency": "BRL", "city": "São Paulo" },
+  "vehicle": {
+    "make": "BYD", "model": "Dolphin", "modelYear": 2025,
+    "version": "GS", "mileageKm": 0, "vinLast6": "XXXXXX"
+  },
+  "specification": {
+    "source": "manufacturer", "sourceUrl": "https://...",
+    "verifiedAt": "2026-09-28", "rangePbevKm": 291, "batteryKwh": 44.9
+  }
+}
+```
+
+Para publicar um atributo técnico, o anúncio deve ter versão, ano, fonte e data de verificação. Para usados, a evolução inclui quilometragem, histórico, laudo, proprietários e situação documental com origem verificável. A regra essencial é não inferir equipamentos pelo modelo ou marca, porque versões e anos variam.
 
 ### Busca, ranking e explicabilidade
 
@@ -239,6 +273,4 @@ Em seguida, abra a URL exibida pelo comando. O servidor é necessário para que 
 ## Referências internas
 
 - [README.md](README.md): instruções rápidas, funcionalidades e cenários de teste.
-- [docs/pesquisa-publico-alvo-automatch.md](docs/pesquisa-publico-alvo-automatch.md): pesquisa de público, negócio, hipóteses e fontes externas.
-- [docs/decisoes-tecnicas.md](docs/decisoes-tecnicas.md): resumo das decisões de implementação.
-- [docs/modelo-de-dados-producao.md](docs/modelo-de-dados-producao.md): evolução recomendada para dados confiáveis de catálogo.
+- [data/cars.json](data/cars.json): catálogo demonstrativo usado pela aplicação.

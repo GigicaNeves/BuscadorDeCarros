@@ -2,6 +2,10 @@
 
 Buscador inteligente de veículos que transforma uma busca sem correspondência exata em uma decisão possível.
 
+**Aplicação publicada:** [buscadordecar.netlify.app](https://buscadordecar.netlify.app/)
+
+Para o racional do case, pesquisa, escopo e decisões de arquitetura, consulte a [documentação completa](documentacao.md).
+
 ## Executar
 
 O projeto não tem dependências. Inicie um servidor estático na raiz:
@@ -26,7 +30,7 @@ Abra a URL exibida. O servidor é necessário porque o catálogo é carregado de
 
 ## Dados e confiança
 
-Os preços e a disponibilidade do JSON são demonstrativos. A interface diferencia esses anúncios de dados técnicos do modelo e aponta a fonte oficial quando ela está verificada. Para integrar estoque real, consulte o [modelo de dados de produção](docs/modelo-de-dados-producao.md).
+Os preços e a disponibilidade do JSON são demonstrativos. A interface diferencia esses anúncios de dados técnicos do modelo e aponta a fonte oficial quando ela está verificada. A proposta de modelo para integrar estoque real está na [documentação completa](documentacao.md#dados-e-modelo-de-confiança).
 
 ## Cenários para testar
 
